@@ -1,0 +1,95 @@
+{% load static %}
+<style type="text/css">
+	@media (min-width: 768px) {
+	  html {
+	    font-size: 19px;
+	  }
+	}
+
+	.search-bar{
+		max-width: 500px;
+		width: 100%;
+		margin-left: 24px;
+		margin-right: 24px;
+	}
+
+	form{
+		width: 100%;
+	}
+
+</style>
+
+<!-- Header -->
+
+<div class="d-flex flex-column flex-md-row align-items-center p-1 px-md-2 mb-0  bg-white border-bottom shadow-sm">
+	<nav class="navbar navbar-expand-lg bg-white m-auto">
+		<a class="navbar-brand" style="padding-right: 12px" href="{% url 'home' %}">
+			<img class="img-fluid d-block m-auto pb-2" src="{% static 'blog.jpg' %}" width="70" height="70">
+		</a>
+
+		<div class="container-fluid" >
+		  	<div class="collapse navbar-collapse" id="navbarScroll"> 
+				<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+					<li class="nav-item" style="padding: 12px; margin-left: 40px;">
+						<a class="nav-link active text-dark" aria-current="page" href="{% url 'home' %}">Home</a>
+					</li>
+					<li class="nav-item dropdown" style="padding: 9px;">
+						<a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Category
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+						<li><a class="dropdown-item" href="#">Tech</a></li>
+						<li><a class="dropdown-item" href="#">Enterpreneur</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" href="#">Social</a></li>
+						</ul>
+					</li>
+					<li>
+						<div class="search-bar mt-sm-2 mr-2 text-center"  style="padding: 9px;">
+							<form onsubmit="return executeQuery();">
+								<input type="text" class="form-control" name="q" id="id_q" placeholder="Search...">
+							</form>
+						</div>
+					</li>
+					<li>
+						
+					</li>
+					<div class="mt-sm-3 mr-3 text-center" style="margin-left: 30px;">
+						{% if request.user.is_authenticated %}
+							<a class="p-4 text-dark" href="{% url 'account' %}">Account</a>
+							<!-- <h5 class="my-0 mr-md-auto font-weight-normal" > -->
+									<!-- <p>Hello, {{request.user.username}}</p> -->
+							<!-- </h5> -->
+							<a class="p-4 text-dark" href="{% url 'logout' %}">Logout</a>
+						{% else %}
+							<a class="p-4 text-dark" href="{% url 'login' %}">Login</a>
+							<a class="p-4 text-dark" href="{% url 'register' %}">Register</a>
+						{% endif %}	
+					</div>
+				</ul>
+
+			
+
+			
+
+		  </div>
+		</div>
+	  </nav>
+</div>
+
+
+<script type="text/javascript">
+	document.getElementById("id_q").value = "{{query}}"
+</script>
+
+<script type="text/javascript">
+	function executeQuery(){
+		var query = document.getElementById("id_q").value
+		window.location.replace("http://127.0.0.1:8000/?q=" + query)
+		return false
+	}
+</script>
+
+<!-- End Header -->
+
