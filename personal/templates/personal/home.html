@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+	.blog-post-container{
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+	.left-column{
+		padding:0px;
+		margin-left: 3px;
+	}
+	.right-column{
+		padding:0px;
+		margin-right: 6px;
+	}
+	.lead{
+		font-size: 14px;
+	}
+	.A_s{
+		color: rgb(243, 103, 10);
+		font-family: sans-serif;
+		font-size: large;
+		font-style: italic;
+	}
+</style>
+<div class="container">
+
+	<br>
+	<div class="form-group">
+	  {% if messages %}
+	  <ul class=messages>
+	    {% for message in messages %}
+	    <div class="alert alert-success"> {{message}} </div>
+	    {% endfor %}
+	  </ul>
+	  {% endif %}
+	</div>
+
+	<div class="row">
+
+		<!-- blog feed -->
+		<!-- Right 'create post' column  -->
+		<div class="left-column col-lg-3 d-lg-flex d-none flex-column">
+
+			<div class="card create-post-bar d-flex flex-column p-3">
+				<!-- <img class="img-fluid d-block m-auto pb-2" src="{% static 'blog.jpg' %}" width="200" height="200"> -->
+				<p class="lead"></p>
+				<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create New Post</a></p>
+				<br>
+				<div style="margin-top: 30px;">
+				<ul>
+					<h5 class="A_s">Also Read this Posts.....</h5>
+					{% for post in blog_posts %}
+					<li>
+					<a href="{% url 'blog:detail' post.slug %}">{{post.title}}</a>
+					</li>
+					{% endfor %}
+				</ul>
+				</div>
+			</div>
+		
+		</div>
+		<!-- end Right 'create post' column  -->
+		<div  class="right-column col-lg-8 offset-lg-1">
+			<!-- Blog posts-->
+			{% if blog_posts %}
+				{% for post in blog_posts %}
+					<div class="blog-post-container">
+						{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="blog-post-container">
+					{% include 'blog/snippets/blog_post_snippet.html' with query=query %}
+				</div>
+			{% endif %}
+			<!-- End Blog posts-->
+			
+			<!-- Pagination -->
+			{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+
+		</div>
+		<!-- end blog feed -->
+		
+
+	</div>
+</div>
+
+{% endblock content %}

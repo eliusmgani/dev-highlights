@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<style type="text/css">
+  .form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  }
+
+  .form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="username"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .h3{
+    text-align: center;
+    font-size: 40px;
+  }
+  .blog-posts{
+    max-width: 500px;
+    width:100%;
+    margin: auto;
+  }
+  .e{
+    font-size: larger;
+  }
+</style>
+
+<div class="card card-header">
+  <h1 class="h3 mb-3 font-weight-normal">Account Infos</h1>
+</div>
+
+
+
+<div class="container mt-4 p-4">
+  <div class="card card-body">
+
+    <div>
+    <h3 class="card card-title">Your Details</h3>
+      <!--<div><img src="{{user.Account.profile_pic.url}}" alt="profile_pic" width="72" height="72"></div>
+      -->Username: <strong>{{user.username}}</strong><br>
+      Email: <strong>{{user.email}}</strong><br>
+    </div>
+    <br>
+    <div>
+      <a href="{% url 'edit_info' %}" class="btn btn-warning"><strong class="e">Edit Your Account Infos..!!</strong></a>
+      <a class="btn btn-info" href="{% url 'blog:create' %}"><strong class="e">Create New Post..!!</strong></a>
+				<br>
+      <div class="form-group">
+        {% if messages %}
+        <ul class=messages>
+          {% for message in messages %}
+          <div class="alert alert-success"> {{message}} </div>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+    </div>
+    <br><br><br>
+    
+      <div class="row">
+        <div class="blog-posts">
+          <h3 class="mb-3 font-weight-normal">Your Blog Posts..!!</h3>
+          {% if blog_posts %}
+          <ul>
+            {% for post in blog_posts %}
+              <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none;">
+                <li class="list-group-item">{{post}}</li>
+              </a>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>You have no blog posts. Create a post <a href="{% url 'blog:create' %}">here</a>.</p>
+          {% endif %}
+    
+        </div>
+      </div>
+
+  </div>
+
+</div>
+
+
+{% endblock content %}
+
+
